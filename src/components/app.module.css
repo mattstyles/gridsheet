@@ -1,0 +1,5 @@
+.app {
+  background-color: var(--color-grey10);
+  padding: var(--space-4);
+  height: 100vh;
+}

@@ -1,0 +1,18 @@
+:root {
+  /* Theme */
+  --color-black: hsl(0, 0%, 0%);
+  --color-grey10: hsl(228, 18%, 17%);
+  --color-grey20: hsl(224, 23%, 21%);
+  --color-grey30: hsl(222, 24%, 25%);
+  --color-white: hsl(0, 0%, 100%);
+
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+
+  /* Tokens */
+  --token-aside-width: 320px;
+}

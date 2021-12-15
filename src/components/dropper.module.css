@@ -1,0 +1,12 @@
+.container {
+  background-color: var(--color-grey10);
+  border-color: var(--color-grey30);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--space-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 280px;
+  min-height: 280px;
+}
