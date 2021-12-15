@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import {Dropper} from './dropper'
+import {Dropzone} from './dropzone'
 import {Spacer} from './spacer'
 import * as styles from './aside.module.css'
 
@@ -9,7 +9,7 @@ export function Aside() {
     <div className={styles.aside}>
       <p>Put things here</p>
       <Spacer space={Spacer.space.small} />
-      <Dropper />
+      <Dropzone />
     </div>
   )
 }

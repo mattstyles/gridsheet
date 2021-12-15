@@ -10,3 +10,7 @@
   min-width: 280px;
   min-height: 280px;
 }
+
+.container-highlight {
+  border-color: var(--color-white);
+}
