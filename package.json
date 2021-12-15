@@ -1,5 +1,6 @@
 {
   "name": "grid-spritesheet",
+  "private": true,
   "description": "GUI helper for dealing with tiled spritesheets",
   "version": "0.0.0",
   "scripts": {
