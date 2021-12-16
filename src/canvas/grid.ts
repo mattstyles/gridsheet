@@ -29,3 +29,16 @@ export function drawGrid({ctx, width, height, gridSize}: GridProps): void {
     ctx.stroke()
   }
 }
+
+type HighlightProps = {
+  ctx: CanvasRenderingContext2D
+  x: number
+  y: number
+  gridSize: number
+}
+export function drawHighlightCell({ctx, x, y, gridSize}: HighlightProps): void {
+  ctx.fillStyle = '#FD0E3544'
+  ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize)
+  ctx.strokeStyle = '#FFFFFFFF'
+  ctx.strokeRect(x * gridSize, y * gridSize, gridSize, gridSize)
+}

@@ -5,8 +5,6 @@ import cx from 'classnames'
 
 import * as styles from './dropper.module.css'
 
-const size = [260, 260]
-
 type DropperProps = {
   onGetImageData: (image: ImageData) => void
 }

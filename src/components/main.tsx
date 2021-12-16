@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {useRef, useEffect} from 'react'
 import cx from 'classnames'
+import {ref} from 'valtio'
 
 import {state} from '../state'
 import {clearCanvas, drawGrid} from '../canvas/grid'
@@ -24,6 +25,15 @@ export function Main() {
       height: state.renderHeight,
       gridSize: state.gridSize,
     })
+
+    const onClick = onCanvasClick(canvas.getContext('2d'))
+    grid.addEventListener('click', onClick)
+
+    state.renderCanvas = ref(canvas)
+
+    return () => {
+      grid.removeEventListener('click', onClick)
+    }
   }, [canvasRef])
 
   return (
@@ -48,4 +58,39 @@ export function Main() {
       ></canvas>
     </div>
   )
+}
+
+function onCanvasClick(ctx: CanvasRenderingContext2D) {
+  return function onClick(event: MouseEvent) {
+    if (state.sourceImage == null || state.sourceTargetCell == null) {
+      return
+    }
+
+    const gridSize = 10
+
+    const {x, y} = {
+      x: (event.offsetX / gridSize) | 0,
+      y: (event.offsetY / gridSize) | 0,
+    }
+    const dest = {
+      x: x * gridSize,
+      y: y * gridSize,
+    }
+    const source = {
+      x: state.sourceTargetCell.x * gridSize,
+      y: state.sourceTargetCell.y * gridSize,
+      w: gridSize,
+      h: gridSize,
+    }
+
+    ctx.putImageData(
+      state.sourceImage,
+      dest.x - source.x,
+      dest.y - source.y,
+      source.x,
+      source.y,
+      source.w,
+      source.h
+    )
+  }
 }
