@@ -8,9 +8,9 @@ import * as styles from './dropper.module.css'
 const size = [260, 260]
 
 type DropperProps = {
-  setImage: (image: ImageData) => void
+  onGetImageData: (image: ImageData) => void
 }
-export function Dropper({setImage}: DropperProps) {
+export function Dropper({onGetImageData}: DropperProps) {
   const [isOver, setIsOver] = useState(false)
 
   const onDragEnter = useCallback(
@@ -23,7 +23,7 @@ export function Dropper({setImage}: DropperProps) {
   const onDrop = useCallback(
     (event) => {
       event.preventDefault()
-      handleImageDrop(event, setImage)
+      handleImageDrop(event, onGetImageData)
       setIsOver(false)
     },
     [isOver, setIsOver]
@@ -47,7 +47,7 @@ const resetDragEvent = (event: React.DragEvent) => {
 
 async function handleImageDrop(
   event: React.DragEvent,
-  setImage: DropperProps['setImage']
+  onComplete: DropperProps['onGetImageData']
 ) {
   event.preventDefault()
   const dt = event.dataTransfer
@@ -60,7 +60,7 @@ async function handleImageDrop(
   }
 
   const data = await getImageData(file)
-  setImage(data)
+  onComplete(data)
 }
 
 function getImageData(file: File): Promise<ImageData> {
@@ -70,8 +70,6 @@ function getImageData(file: File): Promise<ImageData> {
   return new Promise((resolve, reject) => {
     const image = document.createElement('img')
     const canvas = document.createElement('canvas')
-    canvas.width = size[0]
-    canvas.height = size[1]
     const ctx = canvas.getContext('2d')
 
     reader.onerror = reject
@@ -79,8 +77,9 @@ function getImageData(file: File): Promise<ImageData> {
       image.src = event.target.result as string
       image.onerror = reject
       image.onload = () => {
-        console.log(image.width, image.height)
-        ctx.drawImage(image, 0, 0, size[0], size[1])
+        canvas.width = image.width
+        canvas.height = image.height
+        ctx.drawImage(image, 0, 0, image.width, image.height)
         const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
 
         resolve(data)

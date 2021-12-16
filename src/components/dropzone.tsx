@@ -6,8 +6,10 @@ import {Dropper} from './dropper'
 export function Dropzone() {
   const [image, setImage] = useState<ImageData>(null)
 
+  console.log(image)
+
   return image == null ? (
-    <Dropper setImage={setImage} />
+    <Dropper onGetImageData={setImage} />
   ) : (
     <RenderImage image={image} />
   )
