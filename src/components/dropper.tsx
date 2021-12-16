@@ -23,7 +23,6 @@ export function Dropper({setImage}: DropperProps) {
   const onDrop = useCallback(
     (event) => {
       event.preventDefault()
-      console.log('dropped', setImage)
       handleImageDrop(event, setImage)
       setIsOver(false)
     },
@@ -42,39 +41,50 @@ export function Dropper({setImage}: DropperProps) {
   )
 }
 
-const resetDragEvent = (event) => {
+const resetDragEvent = (event: React.DragEvent) => {
   event.preventDefault()
 }
 
-/**
- * For now we will make some assumptions about the drop event
- */
-function handleImageDrop(event, setImage: DropperProps['setImage']) {
+async function handleImageDrop(
+  event: React.DragEvent,
+  setImage: DropperProps['setImage']
+) {
   event.preventDefault()
   const dt = event.dataTransfer
+  // For now we'll grab only 1 file
   const file = dt.files[0]
 
-  console.log(file)
-  console.log(file.type)
-  console.log(file.name)
+  if (!/image*/.test(file.type)) {
+    console.warn('Only image file are supported')
+    return
+  }
 
-  // Read the file
+  const data = await getImageData(file)
+  setImage(data)
+}
+
+function getImageData(file: File): Promise<ImageData> {
   const reader = new FileReader()
   reader.readAsDataURL(file)
-  reader.onloadend = (e) => {
+
+  return new Promise((resolve, reject) => {
     const image = document.createElement('img')
-    image.src = e.target.result as string
-    image.onload = () => {
-      const canvas = document.createElement('canvas')
-      canvas.width = size[0]
-      canvas.height = size[1]
-      const ctx = canvas.getContext('2d')
-      ctx.drawImage(image, 0, 0, size[0], size[1])
-      const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
+    const canvas = document.createElement('canvas')
+    canvas.width = size[0]
+    canvas.height = size[1]
+    const ctx = canvas.getContext('2d')
 
-      console.log(data)
+    reader.onerror = reject
+    reader.onloadend = (event) => {
+      image.src = event.target.result as string
+      image.onerror = reject
+      image.onload = () => {
+        console.log(image.width, image.height)
+        ctx.drawImage(image, 0, 0, size[0], size[1])
+        const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
 
-      setImage(data)
+        resolve(data)
+      }
     }
-  }
+  })
 }

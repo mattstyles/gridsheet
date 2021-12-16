@@ -13,7 +13,7 @@ export function Dropzone() {
   )
 }
 
-function RenderImage({image}) {
+function RenderImage({image}: {image: ImageData}) {
   const canvasRef = useRef(null)
   useEffect(() => {
     if (canvasRef == null) {
@@ -22,7 +22,6 @@ function RenderImage({image}) {
 
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
-    // ctx.drawImage(image, 0, 0)
     ctx.putImageData(image, 0, 0)
   }, [canvasRef, image])
 

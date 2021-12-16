@@ -14,7 +14,6 @@ type GridProps = {
   gridSize: number
 }
 export function drawGrid({ctx, width, height, gridSize}: GridProps): void {
-  console.log('rendering draw grid')
   ctx.strokeStyle = '#88888844'
   for (let i = 0; i <= width; i += gridSize) {
     ctx.beginPath()
