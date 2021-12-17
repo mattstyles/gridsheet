@@ -1,9 +1,5 @@
-.canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .container {
   position: relative;
+  flex: 1;
+  padding: var(--space-4);
 }

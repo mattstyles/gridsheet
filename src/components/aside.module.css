@@ -2,9 +2,9 @@
   width: var(--token-aside-width);
   height: 100vh;
   overflow-y: scroll;
-  position: fixed;
+  /* position: fixed;
   top: 0;
-  right: 0;
+  right: 0; */
   padding: var(--space-4);
   background-color: var(--color-grey20);
   color: var(--color-white);
