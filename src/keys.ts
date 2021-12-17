@@ -12,7 +12,6 @@ export function setKeyHandlers() {
 }
 
 function keyHandler(event: KeyboardEvent): void {
-  console.log(event.key)
   switch (event.key) {
     case 'ArrowLeft':
     case 'a':

@@ -1,0 +1,19 @@
+.type {
+  font-family: monospace;
+  color: var(--color-white);
+}
+
+.small {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+}
+
+.medium {
+  font-size: var(--font-size-2);
+  line-height: var(--line-height-2);
+}
+
+.large {
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}

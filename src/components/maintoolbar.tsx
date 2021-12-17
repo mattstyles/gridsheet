@@ -1,14 +1,48 @@
 import * as React from 'react'
+import {useState, useCallback} from 'react'
 import {useSnapshot} from 'valtio'
 
 import {state} from '../state'
+import {Text} from './text'
+import {Spacer} from './spacer'
 import * as styles from './maintoolbar.module.css'
 
 export function MainToolbar() {
+  const {renderWidth, renderHeight} = useSnapshot(state)
   return (
     <div className={styles.toolbar}>
       <ZoomInput />
-      <Spacer />
+      <Spacer
+        space={Spacer.space.medium}
+        direction={Spacer.direction.horizontal}
+      />
+      <Text>Width</Text>
+      <Spacer
+        space={Spacer.space.small}
+        direction={Spacer.direction.horizontal}
+      />
+      <NumberInput
+        initialValue={renderWidth}
+        onChange={(value) => {
+          state.renderWidth = value
+        }}
+      />
+      <Spacer
+        space={Spacer.space.medium}
+        direction={Spacer.direction.horizontal}
+      />
+      <Text>Height</Text>
+      <Spacer
+        space={Spacer.space.small}
+        direction={Spacer.direction.horizontal}
+      />
+      <NumberInput
+        initialValue={renderHeight}
+        onChange={(value) => {
+          state.renderHeight = value
+        }}
+      />
+      <Separator />
       <button onClick={onSave}>Save</button>
     </div>
   )
@@ -33,7 +67,42 @@ function ZoomInput() {
   )
 }
 
-function Spacer() {
+function NumberInput({
+  onChange,
+  initialValue,
+}: {
+  onChange: (value: number) => void
+  initialValue: number
+}) {
+  const [localValue, setLocalValue] = useState(initialValue)
+
+  const onLocalChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = parseInt(event.target.value)
+      setLocalValue(value)
+    },
+    [setLocalValue, initialValue]
+  )
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        onChange(localValue)
+      }
+    },
+    [initialValue, localValue]
+  )
+  return (
+    <input
+      className={styles.numberInput}
+      type='number'
+      value={localValue}
+      onChange={onLocalChange}
+      onKeyDown={onKeyDown}
+    />
+  )
+}
+
+function Separator() {
   return <div className={styles.spacer}></div>
 }
 

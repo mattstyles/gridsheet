@@ -11,6 +11,7 @@ export function RenderImage() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const gridRef = useRef<HTMLCanvasElement | null>(null)
   const {renderWidth, renderHeight, gridSize, renderZoom} = useSnapshot(state)
+  console.log({renderWidth})
   useEffect(() => {
     const canvas = canvasRef.current
     const grid = gridRef.current
@@ -35,7 +36,7 @@ export function RenderImage() {
     return () => {
       grid.removeEventListener('click', onClick)
     }
-  }, [canvasRef])
+  }, [canvasRef, renderWidth, renderHeight, gridSize])
 
   return (
     <div

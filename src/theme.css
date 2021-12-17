@@ -13,6 +13,14 @@
   --space-4: 16px;
   --space-5: 24px;
 
+  /* Type */
+  --font-size-1: 11px;
+  --line-height-1: 16px;
+  --font-size-2: 14px;
+  --line-height-2: 17px;
+  --font-size-3: 20px;
+  --line-height-3: 25px;
+
   /* Tokens */
   --token-aside-width: 320px;
 }
