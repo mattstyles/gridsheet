@@ -18,7 +18,7 @@ export const state = proxy<State>({
   renderWidth: 640,
   renderHeight: 480,
   renderCanvas: null,
-  renderZoom: 1.4,
+  renderZoom: 1,
   gridSize: 10,
   sourceImage: null,
   sourceTargetCell: null,

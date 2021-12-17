@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {useRef, useState} from 'react'
+import {useRef, useState, useEffect} from 'react'
 import cx from 'classnames'
 
 import {Spacer} from './spacer'
@@ -16,6 +16,18 @@ export function Scrollable({children, min, max, aspect}: ScrollableProps) {
   const containerRef = useRef(null)
   const [scrollX, setScrollX] = useState(0)
   const [scrollY, setScrollY] = useState(0)
+  const [showingX, setShowingX] = useState(false)
+  const [showingY, setShowingY] = useState(false)
+
+  useEffect(() => {
+    if (containerRef == null) {
+      return
+    }
+
+    const el = containerRef.current as HTMLDivElement
+    setShowingX(el.scrollWidth > el.offsetWidth)
+    setShowingY(el.scrollHeight > el.offsetHeight)
+  }, [containerRef, setShowingX, setShowingY])
 
   const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const el = event.target as HTMLDivElement
@@ -38,11 +50,19 @@ export function Scrollable({children, min, max, aspect}: ScrollableProps) {
           space={Spacer.space.small}
           direction={Spacer.direction.horizontal}
         />
-        <ScrollIndicatorV perc={scrollY} />
+        {showingX ? (
+          <ScrollIndicatorV perc={scrollY} />
+        ) : (
+          <Spacer space={Spacer.space.small} />
+        )}
       </div>
       <Spacer space={Spacer.space.small} />
       <div className={styles.row}>
-        <ScrollIndicatorH perc={scrollX} max={max} />
+        {showingY ? (
+          <ScrollIndicatorH perc={scrollX} max={max} />
+        ) : (
+          <Spacer space={Spacer.space.small} />
+        )}
       </div>
     </div>
   )

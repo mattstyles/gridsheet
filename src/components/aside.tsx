@@ -16,24 +16,10 @@ export function Aside() {
       <Spacer space={Spacer.space.small} />
       <Dropzone />
       <Spacer space={Spacer.space.large} />
-      <button onClick={onSave}>Save</button>
     </div>
   )
 }
 
 const onDrag = (positionX: number) => {
   state.asideWidth = window.innerWidth - positionX
-}
-
-function onSave() {
-  if (state.renderCanvas == null) {
-    return
-  }
-
-  const url = state.renderCanvas.toDataURL()
-
-  const link = document.createElement('a')
-  link.download = 'test.png'
-  link.href = url
-  link.click()
 }
