@@ -66,11 +66,14 @@ function onCanvasClick(ctx: CanvasRenderingContext2D) {
       return
     }
 
+    const el = event.target as HTMLCanvasElement
+
     const gridSize = 10
+    const cellSize = (el.offsetWidth / state.renderWidth) * gridSize
 
     const {x, y} = {
-      x: (event.offsetX / gridSize) | 0,
-      y: (event.offsetY / gridSize) | 0,
+      x: (event.offsetX / cellSize) | 0,
+      y: (event.offsetY / cellSize) | 0,
     }
     const dest = {
       x: x * gridSize,
