@@ -8,12 +8,12 @@ import {drawGrid, drawHighlightCell, clearCanvas} from '../canvas/grid'
 import * as styles from './dropzone.module.css'
 
 export function Dropzone() {
-  const {sourceImage, sourceTargetCell} = useSnapshot(state)
+  const {sourceImage, sourceCell} = useSnapshot(state)
 
   return sourceImage == null ? (
     <Dropper onGetImageData={setSourceImage} />
   ) : (
-    <RenderImage image={sourceImage} highlightCell={sourceTargetCell} />
+    <RenderImage image={sourceImage} sourceCell={sourceCell} />
   )
 }
 
@@ -23,10 +23,10 @@ const setSourceImage = (image: ImageData) => {
 
 function RenderImage({
   image,
-  highlightCell,
+  sourceCell,
 }: {
   image: ImageData
-  highlightCell: {x: number; y: number}
+  sourceCell: {x: number; y: number}
 }) {
   const canvasRef = useRef(null)
   const gridRef = useRef(null)
@@ -50,15 +50,15 @@ function RenderImage({
       gridSize: gridSize,
     })
 
-    if (highlightCell != null) {
+    if (sourceCell != null) {
       drawHighlightCell({
         ctx: gridCtx,
-        x: highlightCell.x,
-        y: highlightCell.y,
+        x: sourceCell.x,
+        y: sourceCell.y,
         gridSize: gridSize,
       })
     }
-  }, [canvasRef, image, highlightCell, gridRef])
+  }, [canvasRef, image, sourceCell, gridRef])
 
   return (
     <div
@@ -95,6 +95,6 @@ function onImageClick(image: ImageData) {
     }
 
     // Set source target cell
-    state.sourceTargetCell = {x, y}
+    state.sourceCell = {x, y}
   }
 }

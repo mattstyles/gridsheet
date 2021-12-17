@@ -63,7 +63,7 @@ export function RenderImage() {
 
 function onCanvasClick(ctx: CanvasRenderingContext2D) {
   return function onClick(event: MouseEvent) {
-    if (state.sourceImage == null || state.sourceTargetCell == null) {
+    if (state.sourceImage == null || state.sourceCell == null) {
       return
     }
 
@@ -80,8 +80,8 @@ function onCanvasClick(ctx: CanvasRenderingContext2D) {
       y: y * state.gridSize,
     }
     const source = {
-      x: state.sourceTargetCell.x * state.gridSize,
-      y: state.sourceTargetCell.y * state.gridSize,
+      x: state.sourceCell.x * state.gridSize,
+      y: state.sourceCell.y * state.gridSize,
       w: state.gridSize,
       h: state.gridSize,
     }

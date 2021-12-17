@@ -1,4 +1,5 @@
 import {proxy} from 'valtio'
+import {Point} from './canvas/shape'
 
 type State = {
   renderWidth: number
@@ -7,10 +8,7 @@ type State = {
   renderZoom: number
   gridSize: number
   sourceImage: ImageData | null
-  sourceTargetCell: {
-    x: number
-    y: number
-  } | null
+  sourceCell: Point | null
   asideWidth: number
 }
 
@@ -21,6 +19,6 @@ export const state = proxy<State>({
   renderZoom: 1,
   gridSize: 10,
   sourceImage: null,
-  sourceTargetCell: null,
+  sourceCell: null,
   asideWidth: 320,
 })
