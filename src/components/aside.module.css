@@ -1,5 +1,6 @@
 .aside {
-  width: var(--token-aside-width);
+  position: relative;
+  /* width: var(--token-aside-width); */
   height: 100vh;
   overflow-y: scroll;
   /* position: fixed;

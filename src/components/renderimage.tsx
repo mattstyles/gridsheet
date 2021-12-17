@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {useRef, useEffect} from 'react'
 import cx from 'classnames'
-import {ref} from 'valtio'
+import {ref, useSnapshot} from 'valtio'
 
 import {state} from '../state'
 import {clearCanvas, drawGrid} from '../canvas/grid'
@@ -10,6 +10,7 @@ import * as styles from './renderimage.module.css'
 export function RenderImage() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const gridRef = useRef<HTMLCanvasElement | null>(null)
+  const {renderWidth, renderHeight, gridSize, renderZoom} = useSnapshot(state)
   useEffect(() => {
     const canvas = canvasRef.current
     const grid = gridRef.current
@@ -18,12 +19,12 @@ export function RenderImage() {
     }
 
     const ctx = grid.getContext('2d')
-    clearCanvas({ctx, width: state.renderWidth, height: state.renderHeight})
+    clearCanvas({ctx, width: renderWidth, height: renderHeight})
     drawGrid({
       ctx,
-      width: state.renderWidth,
-      height: state.renderHeight,
-      gridSize: state.gridSize,
+      width: renderWidth,
+      height: renderHeight,
+      gridSize: gridSize,
     })
 
     const onClick = onCanvasClick(canvas.getContext('2d'))
@@ -40,21 +41,21 @@ export function RenderImage() {
     <div
       className={styles.container}
       style={{
-        width: state.renderWidth + 'px',
-        height: state.renderHeight + 'px',
+        width: `${renderZoom * 100}%`,
+        aspectRatio: `${renderWidth} / ${renderHeight}`,
       }}
     >
       <canvas
         className={cx('js-canvas', styles.canvas)}
         ref={canvasRef}
-        width={state.renderWidth}
-        height={state.renderHeight}
+        width={renderWidth}
+        height={renderHeight}
       ></canvas>
       <canvas
         className={cx('js-grid-canvas', styles.canvas)}
         ref={gridRef}
-        width={state.renderWidth}
-        height={state.renderHeight}
+        width={renderWidth}
+        height={renderHeight}
       ></canvas>
     </div>
   )
@@ -68,22 +69,21 @@ function onCanvasClick(ctx: CanvasRenderingContext2D) {
 
     const el = event.target as HTMLCanvasElement
 
-    const gridSize = 10
-    const cellSize = (el.offsetWidth / state.renderWidth) * gridSize
+    const cellSize = (el.offsetWidth / state.renderWidth) * state.gridSize
 
     const {x, y} = {
       x: (event.offsetX / cellSize) | 0,
       y: (event.offsetY / cellSize) | 0,
     }
     const dest = {
-      x: x * gridSize,
-      y: y * gridSize,
+      x: x * state.gridSize,
+      y: y * state.gridSize,
     }
     const source = {
-      x: state.sourceTargetCell.x * gridSize,
-      y: state.sourceTargetCell.y * gridSize,
-      w: gridSize,
-      h: gridSize,
+      x: state.sourceTargetCell.x * state.gridSize,
+      y: state.sourceTargetCell.y * state.gridSize,
+      w: state.gridSize,
+      h: state.gridSize,
     }
 
     ctx.putImageData(

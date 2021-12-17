@@ -30,6 +30,8 @@ function RenderImage({
 }) {
   const canvasRef = useRef(null)
   const gridRef = useRef(null)
+  const {gridSize} = useSnapshot(state)
+
   useEffect(() => {
     if (canvasRef.current == null || gridRef.current == null) {
       return
@@ -45,7 +47,7 @@ function RenderImage({
       ctx: gridCtx,
       width: image.width,
       height: image.height,
-      gridSize: 10,
+      gridSize: gridSize,
     })
 
     if (highlightCell != null) {
@@ -53,13 +55,16 @@ function RenderImage({
         ctx: gridCtx,
         x: highlightCell.x,
         y: highlightCell.y,
-        gridSize: 10,
+        gridSize: gridSize,
       })
     }
   }, [canvasRef, image, highlightCell, gridRef])
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{aspectRatio: `${image.width} / ${image.height}`}}
+    >
       <canvas
         className={styles['dropzone-image']}
         width={image.width}
@@ -82,8 +87,7 @@ function onImageClick(image: ImageData) {
     const ne = event.nativeEvent
     const el = event.target as HTMLCanvasElement
 
-    const gridSize = 10
-    const cellSize = (el.offsetWidth / image.width) * gridSize
+    const cellSize = (el.offsetWidth / image.width) * state.gridSize
 
     const {x, y} = {
       x: (ne.offsetX / cellSize) | 0,

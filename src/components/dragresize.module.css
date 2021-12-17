@@ -1,0 +1,18 @@
+.container {
+  cursor: col-resize;
+  opacity: 0;
+  background-color: var(--color-white);
+  transition: opacity 300ms ease-out;
+}
+
+.container:hover {
+  opacity: 0.2;
+}
+
+.horizontal {
+  width: var(--space-2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}

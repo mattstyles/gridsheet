@@ -1,0 +1,47 @@
+.container {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.image-container {
+  width: 100%;
+  overflow: scroll;
+}
+
+.scrollTrack {
+  position: relative;
+  background: var(--color-grey20);
+  border-radius: 3px;
+}
+.scrollH {
+  width: 100%;
+  height: var(--space-1);
+}
+.scrollV {
+  width: var(--space-1);
+}
+
+.scrollIndicator {
+  position: absolute;
+  background-color: var(--color-white);
+  opacity: 0.25;
+  border-radius: 3px;
+}
+.scrollHIndicator {
+  top: 0;
+  width: var(--space-4);
+  height: var(--space-1);
+}
+.scrollVIndicator {
+  left: 0;
+  width: var(--space-1);
+  height: var(--space-4);
+}

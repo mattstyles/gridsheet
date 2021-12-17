@@ -18,7 +18,7 @@ type SpacerProps = {
   space: Space
   direction?: Direction
 }
-export function Spacer({space, direction = Direction.horizontal}: SpacerProps) {
+export function Spacer({space, direction = Direction.vertical}: SpacerProps) {
   return (
     <div
       className={cx(
