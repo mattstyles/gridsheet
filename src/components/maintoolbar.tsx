@@ -16,32 +16,36 @@ export function MainToolbar() {
         space={Spacer.space.medium}
         direction={Spacer.direction.horizontal}
       />
-      <Text>Width</Text>
-      <Spacer
-        space={Spacer.space.small}
-        direction={Spacer.direction.horizontal}
-      />
-      <NumberInput
-        initialValue={renderWidth}
-        onChange={(value) => {
-          state.renderWidth = value
-        }}
-      />
+      <InputGroup>
+        <Text>Width</Text>
+        <Spacer
+          space={Spacer.space.small}
+          direction={Spacer.direction.horizontal}
+        />
+        <NumberInput
+          initialValue={renderWidth}
+          onChange={(value) => {
+            state.renderWidth = value
+          }}
+        />
+      </InputGroup>
       <Spacer
         space={Spacer.space.medium}
         direction={Spacer.direction.horizontal}
       />
-      <Text>Height</Text>
-      <Spacer
-        space={Spacer.space.small}
-        direction={Spacer.direction.horizontal}
-      />
-      <NumberInput
-        initialValue={renderHeight}
-        onChange={(value) => {
-          state.renderHeight = value
-        }}
-      />
+      <InputGroup>
+        <Text>Height</Text>
+        <Spacer
+          space={Spacer.space.small}
+          direction={Spacer.direction.horizontal}
+        />
+        <NumberInput
+          initialValue={renderHeight}
+          onChange={(value) => {
+            state.renderHeight = value
+          }}
+        />
+      </InputGroup>
       <Separator />
       <button onClick={onSave}>Save</button>
     </div>
@@ -89,8 +93,12 @@ function NumberInput({
         onChange(localValue)
       }
     },
-    [initialValue, localValue]
+    [localValue]
   )
+  const onBlur = useCallback(() => {
+    onChange(localValue)
+  }, [localValue])
+
   return (
     <input
       className={styles.numberInput}
@@ -98,6 +106,7 @@ function NumberInput({
       value={localValue}
       onChange={onLocalChange}
       onKeyDown={onKeyDown}
+      onBlur={onBlur}
     />
   )
 }
@@ -117,4 +126,8 @@ function onSave() {
   link.download = 'test.png'
   link.href = url
   link.click()
+}
+
+function InputGroup({children}: {children: React.ReactNode}) {
+  return <div className={styles.inputGroup}>{children}</div>
 }

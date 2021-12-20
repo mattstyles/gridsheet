@@ -10,3 +10,9 @@
 .numberInput {
   width: 60px;
 }
+
+.inputGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

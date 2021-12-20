@@ -53,7 +53,7 @@ function validateSourceCell(fn: (dim: Rect, source: Point) => void) {
   )
 }
 
-function setSourceCellLeft(dim: Rect, source: Point) {
+function setSourceCellLeft(_: Rect, source: Point) {
   if (source.x === 0) {
     return
   }
@@ -69,7 +69,7 @@ function setSourceCellRight(dim: Rect, source: Point) {
   state.sourceCell = new Point(source.x + 1, source.y)
 }
 
-function setSourceCellUp(dim: Rect, source: Point) {
+function setSourceCellUp(_: Rect, source: Point) {
   if (source.y === 0) {
     return
   }
