@@ -4,6 +4,8 @@ import {useSnapshot} from 'valtio'
 
 import {state} from '../state'
 import {drawGrid, drawHighlightCell, clearCanvas} from '../canvas/grid'
+import {SourceToolbar} from './sourcetoolbar'
+import {Spacer} from './spacer'
 import * as styles from './sourceimage.module.css'
 
 export function SourceImage({
@@ -46,23 +48,27 @@ export function SourceImage({
   }, [canvasRef, image, sourceCell, gridRef])
 
   return (
-    <div
-      className={styles.container}
-      style={{aspectRatio: `${image.width} / ${image.height}`}}
-    >
-      <canvas
-        className={styles['source-image']}
-        width={image.width}
-        height={image.height}
-        ref={canvasRef}
-      ></canvas>
-      <canvas
-        className={styles['source-image']}
-        width={image.width}
-        height={image.height}
-        ref={gridRef}
-        onClick={onImageClick(image)}
-      ></canvas>
+    <div>
+      <SourceToolbar />
+      <Spacer space={Spacer.space.small} />
+      <div
+        className={styles.container}
+        style={{aspectRatio: `${image.width} / ${image.height}`}}
+      >
+        <canvas
+          className={styles['source-image']}
+          width={image.width}
+          height={image.height}
+          ref={canvasRef}
+        ></canvas>
+        <canvas
+          className={styles['source-image']}
+          width={image.width}
+          height={image.height}
+          ref={gridRef}
+          onClick={onImageClick(image)}
+        ></canvas>
+      </div>
     </div>
   )
 }
